@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
-import { Search, Plus, Sparkles } from 'lucide-react';
+import { Search, Plus } from 'lucide-react';
 
 export default function Navbar({
   searchQuery,
   onSearchChange,
-  onOpenAddModal,
-  onToggleChat,
-  isChatOpen
+  onOpenAddModal
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -54,15 +52,6 @@ export default function Navbar({
         <a href="#explore" className="nav-link" id="nav-about">ABOUT US</a>
         <a href="#categories" className="nav-link" id="nav-contact">CATEGORIES</a>
         <a href="#cta" className="nav-link" id="nav-faq">FAQ</a>
-        
-        <button
-          className={`ai-nav-btn ${isChatOpen ? 'active' : ''}`}
-          onClick={onToggleChat}
-          title="Open Link Value AI Assistant"
-        >
-          <Sparkles size={15} />
-          <span>AI Assistant</span>
-        </button>
 
         <button className="nav-add-btn" onClick={onOpenAddModal}>
           <Plus size={16} />

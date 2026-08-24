@@ -9,7 +9,6 @@ import StatsSection from './components/StatsSection';
 import CtaSection from './components/CtaSection';
 import Footer from './components/Footer';
 import AddResourceModal from './components/AddResourceModal';
-import ChatBot from './components/ChatBot';
 import {
   getStoredResources,
   saveResources,
@@ -23,7 +22,6 @@ export default function App() {
   const [selectedTag, setSelectedTag] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [isChatOpen, setIsChatOpen] = useState(false);
 
   // Sync to localStorage
   useEffect(() => {
@@ -103,8 +101,6 @@ export default function App() {
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onOpenAddModal={() => setIsAddModalOpen(true)}
-        onToggleChat={() => setIsChatOpen(!isChatOpen)}
-        isChatOpen={isChatOpen}
       />
 
       {/* 2. Hero Banner */}
@@ -113,7 +109,7 @@ export default function App() {
       {/* 3. Features "WHY LINK VALUE" */}
       <Features />
 
-      {/* 4. Interactive CS Resources Dashboard (Matching media_1787542931834.png) */}
+      {/* 4. Interactive CS Resources Dashboard */}
       <Dashboard
         resources={filteredResources}
         selectedCategory={selectedCategory}
@@ -155,16 +151,11 @@ export default function App() {
         onOpenAddModal={() => setIsAddModalOpen(true)}
       />
 
-      {/* Modals & Drawers */}
+      {/* Add Resource Modal */}
       <AddResourceModal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         onAddResource={handleAddResource}
-      />
-
-      <ChatBot
-        isOpen={isChatOpen}
-        onClose={() => setIsChatOpen(false)}
       />
     </div>
   );
