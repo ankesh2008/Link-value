@@ -1,0 +1,92 @@
+[
+  {
+    "id": "res-1",
+    "title": "MDN Web Docs",
+    "description": "The definitive reference for HTML, CSS, and JavaScript with guides and interactive examples.",
+    "url": "https://developer.mozilla.org",
+    "category": "Web Dev",
+    "semester": "Semester 3",
+    "tags": ["HTML", "CSS", "JavaScript", "Reference"],
+    "status": "Mastered"
+  },
+  {
+    "id": "res-2",
+    "title": "React Official Docs",
+    "description": "Modern React documentation covering hooks, components, and the mental model behind UI as a function of state.",
+    "url": "https://react.dev",
+    "category": "Web Dev",
+    "semester": "Semester 4",
+    "tags": ["React", "Frontend", "Hooks"],
+    "status": "In Progress"
+  },
+  {
+    "id": "res-3",
+    "title": "CS50: Introduction to Computer Science",
+    "description": "Harvard's flagship intro course covering C, memory, algorithms, and the fundamentals of computing.",
+    "url": "https://cs50.harvard.edu",
+    "category": "Core CS",
+    "semester": "Semester 1",
+    "tags": ["Algorithms", "C", "Fundamentals"],
+    "status": "Mastered"
+  },
+  {
+    "id": "res-4",
+    "title": "Neetcode — Coding Interview Roadmap",
+    "description": "A curated roadmap of data structures and algorithms problems with clean video explanations.",
+    "url": "https://neetcode.io",
+    "category": "Core CS",
+    "semester": "Semester 5",
+    "tags": ["DSA", "Algorithms", "Interview"],
+    "status": "In Progress"
+  },
+  {
+    "id": "res-5",
+    "title": "Fast.ai — Practical Deep Learning",
+    "description": "Top-down, code-first deep learning course that gets you training real models from lesson one.",
+    "url": "https://course.fast.ai",
+    "category": "AI/ML",
+    "semester": "Semester 6",
+    "tags": ["Deep Learning", "PyTorch", "Neural Nets"],
+    "status": "To Read"
+  },
+  {
+    "id": "res-6",
+    "title": "Distill — Machine Learning Explained",
+    "description": "Beautifully illustrated interactive articles that demystify complex ML concepts and intuition.",
+    "url": "https://distill.pub",
+    "category": "AI/ML",
+    "semester": "Semester 6",
+    "tags": ["ML Theory", "Visualization", "Research"],
+    "status": "To Read"
+  },
+  {
+    "id": "res-7",
+    "title": "The Missing Semester of Your CS Education",
+    "description": "MIT course teaching terminal commands, shell scripting, Git, vim, and essential developer tools.",
+    "url": "https://missing.csail.mit.edu",
+    "category": "Academics",
+    "semester": "Semester 2",
+    "tags": ["Terminal", "Shell", "Git"],
+    "status": "Mastered"
+  },
+  {
+    "id": "res-8",
+    "title": "Excalidraw",
+    "description": "Virtual whiteboard for sketching hand-drawn like system design diagrams and architecture flows.",
+    "url": "https://excalidraw.com",
+    "category": "Web Dev",
+    "semester": "Semester 5",
+    "tags": ["Canvas", "Diagrams", "Design"],
+    "status": "Mastered"
+  },
+  {
+    "id": "res-9",
+    "title": "Hugging Face — Transformers Course",
+    "description": "Comprehensive course on building, fine-tuning, and deploying modern Large Language Models and NLP transformers.",
+    "url": "https://huggingface.co/course",
+    "category": "AI/ML",
+    "semester": "Semester 7",
+    "tags": ["NLP", "Transformers", "LLMs"],
+    "status": "To Read"
+  }
+]
