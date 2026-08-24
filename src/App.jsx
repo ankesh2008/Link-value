@@ -16,6 +16,7 @@ import {
 } from './utils/storage';
 
 export default function App() {
+  const [currentPage, setCurrentPage] = useState('home'); // 'home' | 'dashboard'
   const [resources, setResources] = useState(() => getStoredResources());
   const [selectedCategory, setSelectedCategory] = useState('All Resources');
   const [selectedSemester, setSelectedSemester] = useState('All Semesters');
@@ -94,67 +95,79 @@ export default function App() {
     setSearchQuery('');
   };
 
+  const handleCategorySelect = (categoryName) => {
+    setSelectedCategory(categoryName);
+    setCurrentPage('dashboard');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="app-wrapper">
-      {/* 1. Header Navbar */}
+      {/* Universal Header Navbar */}
       <Navbar
+        currentPage={currentPage}
+        onNavigate={(page) => {
+          setCurrentPage(page);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onOpenAddModal={() => setIsAddModalOpen(true)}
       />
 
-      {/* 2. Interactive Cyber Hero Banner */}
-      <Hero
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        onSelectCategory={setSelectedCategory}
-        onOpenAddModal={() => setIsAddModalOpen(true)}
-      />
+      {currentPage === 'home' ? (
+        <>
+          {/* WELCOME LANDING PAGE */}
+          <Hero
+            onExplore={() => {
+              setCurrentPage('dashboard');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
 
-      {/* 3. Features "WHY LINK VALUE" */}
-      <Features />
+          <Features />
 
-      {/* 4. Interactive CS Resources Dashboard & Matrix */}
-      <Dashboard
-        resources={filteredResources}
-        selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
-        selectedSemester={selectedSemester}
-        onSelectSemester={setSelectedSemester}
-        selectedTag={selectedTag}
-        onSelectTag={setSelectedTag}
-        searchQuery={searchQuery}
-        onClearSearch={() => setSearchQuery('')}
-        categoryCounts={categoryCounts}
-        onStatusToggle={handleStatusToggle}
-        onDeleteResource={handleDeleteResource}
-        onResetData={handleResetData}
-      />
+          <CategoriesSection onSelectCategory={handleCategorySelect} />
 
-      {/* 5. Browse Categories Section */}
-      <CategoriesSection
-        onSelectCategory={(cat) => {
-          setSelectedCategory(cat);
-          const dash = document.getElementById('dashboard');
-          if (dash) dash.scrollIntoView({ behavior: 'smooth' });
-        }}
-      />
+          <StatsSection />
 
-      {/* 6. Stats Section */}
-      <StatsSection />
+          <CtaSection onOpenAddModal={() => setIsAddModalOpen(true)} />
 
-      {/* 7. CTA Section */}
-      <CtaSection onOpenAddModal={() => setIsAddModalOpen(true)} />
+          <Footer
+            onSelectCategory={handleCategorySelect}
+            onOpenAddModal={() => setIsAddModalOpen(true)}
+          />
+        </>
+      ) : (
+        <>
+          {/* SEPARATE CS RESOURCE HUB DASHBOARD PAGE */}
+          <Dashboard
+            resources={filteredResources}
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+            selectedSemester={selectedSemester}
+            onSelectSemester={setSelectedSemester}
+            selectedTag={selectedTag}
+            onSelectTag={setSelectedTag}
+            searchQuery={searchQuery}
+            onClearSearch={() => setSearchQuery('')}
+            categoryCounts={categoryCounts}
+            onStatusToggle={handleStatusToggle}
+            onDeleteResource={handleDeleteResource}
+            onResetData={handleResetData}
+            onNavigateHome={() => {
+              setCurrentPage('home');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenAddModal={() => setIsAddModalOpen(true)}
+          />
 
-      {/* 8. Footer */}
-      <Footer
-        onSelectCategory={(cat) => {
-          setSelectedCategory(cat);
-          const dash = document.getElementById('dashboard');
-          if (dash) dash.scrollIntoView({ behavior: 'smooth' });
-        }}
-        onOpenAddModal={() => setIsAddModalOpen(true)}
-      />
+          <Footer
+            onSelectCategory={handleCategorySelect}
+            onOpenAddModal={() => setIsAddModalOpen(true)}
+          />
+        </>
+      )}
 
       {/* Add Resource Modal */}
       <AddResourceModal

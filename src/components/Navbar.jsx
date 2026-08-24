@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
-import { Search, Plus } from 'lucide-react';
+import { Search, Plus, Home, Grid } from 'lucide-react';
 
 export default function Navbar({
+  currentPage,
+  onNavigate,
   searchQuery,
   onSearchChange,
   onOpenAddModal
@@ -20,7 +22,7 @@ export default function Navbar({
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`} id="navbar">
       <div className="nav-left">
-        <a href="#hero" className="logo" id="logo">
+        <button className="logo-btn" onClick={() => onNavigate('home')}>
           <div className="logo-icon">
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
               <rect width="28" height="28" rx="6" fill="#00e5ff" />
@@ -31,7 +33,7 @@ export default function Navbar({
             <span className="logo-name">Link Value</span>
             <span className="logo-sub">CS RESOURCE HUB</span>
           </div>
-        </a>
+        </button>
       </div>
 
       <div className="nav-center">
@@ -41,17 +43,37 @@ export default function Navbar({
             type="text"
             placeholder="What are you looking for?"
             value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
+            onChange={(e) => {
+              onSearchChange(e.target.value);
+              if (currentPage !== 'dashboard') {
+                onNavigate('dashboard');
+              }
+            }}
             id="search-input"
           />
         </div>
       </div>
 
       <div className="nav-right">
-        <a href="#dashboard" className="nav-link" id="nav-dashboard">DASHBOARD</a>
-        <a href="#explore" className="nav-link" id="nav-about">ABOUT US</a>
-        <a href="#categories" className="nav-link" id="nav-contact">CATEGORIES</a>
-        <a href="#cta" className="nav-link" id="nav-faq">FAQ</a>
+        {currentPage === 'dashboard' ? (
+          <button className="nav-page-btn" onClick={() => onNavigate('home')}>
+            <Home size={14} />
+            <span>HOME PAGE</span>
+          </button>
+        ) : (
+          <button className="nav-page-btn" onClick={() => onNavigate('dashboard')}>
+            <Grid size={14} />
+            <span>DASHBOARD</span>
+          </button>
+        )}
+
+        <a href="#explore" className="nav-link" onClick={() => onNavigate('home')}>ABOUT US</a>
+        <a href="#categories" className="nav-link" onClick={() => onNavigate('home')}>CATEGORIES</a>
+        <a href="#cta" className="nav-link" onClick={() => onNavigate('home')}>FAQ</a>
+
+        <button className="nav-btn" onClick={() => onNavigate('dashboard')}>
+          Join
+        </button>
 
         <button className="nav-add-btn" onClick={onOpenAddModal}>
           <Plus size={16} />

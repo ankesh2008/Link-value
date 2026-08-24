@@ -21,15 +21,15 @@
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
 }
 
-.nav-left {
-  display: flex;
-  align-items: center;
-}
-
-.logo {
+.logo-btn {
   display: flex;
   align-items: center;
   gap: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
 }
 
 .logo-icon {
@@ -115,6 +115,7 @@
   transition: color var(--transition-fast);
   position: relative;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .nav-link::after {
@@ -135,6 +136,45 @@
 
 .nav-link:hover::after {
   width: 100%;
+}
+
+.nav-page-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #00e5ff;
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: all var(--transition-fast);
+}
+
+.nav-page-btn:hover {
+  background: #00e5ff;
+  color: #0b1120;
+}
+
+.nav-btn {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--bg-primary);
+  background: var(--accent);
+  padding: 6px 20px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.04em;
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  cursor: pointer;
+}
+
+.nav-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 229, 255, 0.25);
 }
 
 .nav-add-btn {

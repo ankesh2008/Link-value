@@ -2,18 +2,7 @@ import React from 'react';
 import './Dashboard.css';
 import Sidebar from './Sidebar';
 import ResourceCard from './ResourceCard';
-import { Filter, X, Sparkles, Layers } from 'lucide-react';
-
-const SEMESTERS = [
-  'All Semesters',
-  'Semester 1',
-  'Semester 2',
-  'Semester 3',
-  'Semester 4',
-  'Semester 5',
-  'Semester 6',
-  'Semester 7'
-];
+import { Filter, X, ArrowLeft, Plus } from 'lucide-react';
 
 export default function Dashboard({
   resources,
@@ -28,127 +17,116 @@ export default function Dashboard({
   categoryCounts,
   onStatusToggle,
   onDeleteResource,
-  onResetData
+  onResetData,
+  onNavigateHome,
+  onOpenAddModal
 }) {
   return (
-    <section className="dashboard-section" id="dashboard">
-      <div className="dashboard-wrapper">
-        {/* Horizontal Semester Navigation Tabs */}
-        <div className="semester-tabs-container">
-          <div className="semester-tabs-header">
-            <Layers size={15} className="sem-header-icon" />
-            <span>FILTER BY SEMESTER:</span>
-          </div>
-          <div className="semester-tabs">
-            {SEMESTERS.map((sem) => {
-              const isActive = selectedSemester === sem;
-              return (
-                <button
-                  key={sem}
-                  className={`sem-tab-btn ${isActive ? 'active' : ''}`}
-                  onClick={() => onSelectSemester(sem)}
-                >
-                  {sem === 'All Semesters' ? 'All Semesters' : sem.replace('Semester ', 'Sem ')}
+    <section className="dashboard-page" id="dashboard">
+      <div className="dashboard-page-container">
+        {/* Left Sidebar Navigation */}
+        <Sidebar
+          selectedCategory={selectedCategory}
+          onSelectCategory={onSelectCategory}
+          selectedSemester={selectedSemester}
+          onSelectSemester={onSelectSemester}
+          categoryCounts={categoryCounts}
+          onResetData={onResetData}
+        />
+
+        {/* Main Content Viewport */}
+        <main className="dashboard-page-main">
+          {/* Top Page Header Bar */}
+          <div className="dashboard-page-header">
+            <div>
+              <div className="header-nav-row">
+                <button className="back-home-btn" onClick={onNavigateHome}>
+                  <ArrowLeft size={14} />
+                  <span>Back to Welcome Page</span>
                 </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Dashboard Main Grid with Left Sidebar */}
-        <div className="dashboard-container">
-          {/* Left Sidebar Category Navigation */}
-          <Sidebar
-            selectedCategory={selectedCategory}
-            onSelectCategory={onSelectCategory}
-            selectedSemester={selectedSemester}
-            onSelectSemester={onSelectSemester}
-            categoryCounts={categoryCounts}
-            onResetData={onResetData}
-          />
-
-          {/* Main Resource Cards Viewport */}
-          <main className="dashboard-main">
-            {/* Active Header Row */}
-            <div className="dashboard-header">
-              <div>
-                <div className="active-category-title-row">
-                  <h2 className="dashboard-title">{selectedCategory}</h2>
-                  {selectedSemester !== 'All Semesters' && (
-                    <span className="sem-active-badge">{selectedSemester}</span>
-                  )}
-                </div>
-                <p className="dashboard-count">
-                  Showing {resources.length} {resources.length === 1 ? 'curated link' : 'curated links'}
-                </p>
               </div>
-
-              {/* Active Filter Chips */}
-              {(selectedCategory !== 'All Resources' || selectedSemester !== 'All Semesters' || selectedTag || searchQuery) && (
-                <div className="active-filters-box">
-                  {selectedTag && (
-                    <span className="filter-chip">
-                      #{selectedTag}
-                      <X size={12} className="chip-remove" onClick={() => onSelectTag(null)} />
-                    </span>
-                  )}
-
-                  {searchQuery && (
-                    <span className="filter-chip">
-                      Search: "{searchQuery}"
-                      <X size={12} className="chip-remove" onClick={onClearSearch} />
-                    </span>
-                  )}
-
-                  <button
-                    className="clear-all-filters-btn"
-                    onClick={() => {
-                      onSelectCategory('All Resources');
-                      onSelectSemester('All Semesters');
-                      onSelectTag(null);
-                      onClearSearch();
-                    }}
-                  >
-                    Reset Filters
-                  </button>
-                </div>
-              )}
+              <h1 className="dashboard-page-title">{selectedCategory}</h1>
+              <p className="dashboard-page-subtitle">
+                {resources.length} {resources.length === 1 ? 'resource' : 'resources'}
+              </p>
             </div>
 
-            {/* 3-Column Resource Cards Grid */}
-            {resources.length > 0 ? (
-              <div className="resource-grid">
-                {resources.map((resource) => (
-                  <ResourceCard
-                    key={resource.id}
-                    resource={resource}
-                    onStatusToggle={onStatusToggle}
-                    onTagClick={onSelectTag}
-                    onDelete={onDeleteResource}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="dashboard-empty">
-                <Filter size={36} className="empty-icon" />
-                <h3>No resources match your filters</h3>
-                <p>Try clearing your active tags, search keyword, or selected semester.</p>
-                <button
-                  className="empty-reset-btn"
-                  onClick={() => {
-                    onSelectCategory('All Resources');
-                    onSelectSemester('All Semesters');
-                    onSelectTag(null);
-                    onClearSearch();
-                  }}
-                >
-                  <Sparkles size={14} />
-                  <span>Show All Resources</span>
-                </button>
-              </div>
-            )}
-          </main>
-        </div>
+            <div className="header-actions">
+              <button className="add-resource-dash-btn" onClick={onOpenAddModal}>
+                <Plus size={16} />
+                <span>+ Add Resource</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Active Filters Row */}
+          {(selectedCategory !== 'All Resources' || selectedSemester !== 'All Semesters' || selectedTag || searchQuery) && (
+            <div className="active-filters-bar">
+              <span className="filters-label">Active Filters:</span>
+              {selectedSemester !== 'All Semesters' && (
+                <span className="filter-chip">
+                  {selectedSemester}
+                  <X size={12} className="chip-remove" onClick={() => onSelectSemester('All Semesters')} />
+                </span>
+              )}
+              {selectedTag && (
+                <span className="filter-chip">
+                  #{selectedTag}
+                  <X size={12} className="chip-remove" onClick={() => onSelectTag(null)} />
+                </span>
+              )}
+              {searchQuery && (
+                <span className="filter-chip">
+                  Search: "{searchQuery}"
+                  <X size={12} className="chip-remove" onClick={onClearSearch} />
+                </span>
+              )}
+              <button
+                className="clear-filters-btn"
+                onClick={() => {
+                  onSelectCategory('All Resources');
+                  onSelectSemester('All Semesters');
+                  onSelectTag(null);
+                  onClearSearch();
+                }}
+              >
+                Clear All
+              </button>
+            </div>
+          )}
+
+          {/* 3-Column Resource Cards Grid matching media_1787542931834.png */}
+          {resources.length > 0 ? (
+            <div className="resource-grid">
+              {resources.map((resource) => (
+                <ResourceCard
+                  key={resource.id}
+                  resource={resource}
+                  onStatusToggle={onStatusToggle}
+                  onTagClick={onSelectTag}
+                  onDelete={onDeleteResource}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="dashboard-empty-box">
+              <Filter size={36} className="empty-icon" />
+              <h3>No resources found</h3>
+              <p>Try clearing your active filters or searching for a different computer science topic.</p>
+              <button
+                className="reset-filters-btn"
+                onClick={() => {
+                  onSelectCategory('All Resources');
+                  onSelectSemester('All Semesters');
+                  onSelectTag(null);
+                  onClearSearch();
+                }}
+              >
+                Reset All Filters
+              </button>
+            </div>
+          )}
+        </main>
       </div>
     </section>
   );
