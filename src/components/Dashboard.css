@@ -1,18 +1,86 @@
 .dashboard-section {
-  padding: 40px 0 80px;
+  padding: 50px 0 90px;
   background-color: #0b1120;
   min-height: 100vh;
 }
 
-.dashboard-container {
+.dashboard-wrapper {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 24px;
   display: flex;
-  gap: 32px;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Horizontal Semester Navigation Tabs */
+.semester-tabs-container {
+  background: #0d1525;
+  border: 1px solid #1e293b;
+  border-radius: 14px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  overflow-x: auto;
+}
+
+.semester-tabs-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.sem-header-icon {
+  color: #00e5ff;
+}
+
+.semester-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.sem-tab-btn {
+  padding: 6px 14px;
+  border-radius: 50px;
+  background: #111827;
+  border: 1px solid #1e293b;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.sem-tab-btn:hover {
+  background: #162032;
+  color: #f1f5f9;
+  border-color: #2d3f56;
+}
+
+.sem-tab-btn.active {
+  background: #00e5ff;
+  color: #0b1120;
+  border-color: #00e5ff;
+  font-weight: 700;
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.3);
+}
+
+/* Main Container with Sidebar */
+.dashboard-container {
+  display: flex;
+  gap: 28px;
   background-color: #0d1525;
   border: 1px solid #1e293b;
-  border-radius: var(--radius-xl);
+  border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
 }
@@ -31,21 +99,36 @@
   margin-bottom: 28px;
 }
 
+.active-category-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .dashboard-title {
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 800;
   color: #f1f5f9;
   line-height: 1.1;
 }
 
-.dashboard-count {
-  font-size: 0.88rem;
-  color: #64748b;
-  margin-top: 4px;
-  display: block;
+.sem-active-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgba(0, 229, 255, 0.12);
+  color: #00e5ff;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  padding: 3px 10px;
+  border-radius: 50px;
 }
 
-.active-filters {
+.dashboard-count {
+  font-size: 0.86rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.active-filters-box {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -81,7 +164,7 @@
   color: #00e5ff;
 }
 
-/* 3-Column Responsive Grid matching media_1787542931834.png */
+/* 3-Column Grid Layout */
 .resource-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -104,16 +187,31 @@
   color: #64748b;
 }
 
+.dashboard-empty h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.dashboard-empty p {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  max-width: 420px;
+}
+
 .empty-reset-btn {
   margin-top: 8px;
   padding: 8px 18px;
   background-color: #00e5ff;
   color: #0b1120;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.85rem;
-  border-radius: 6px;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 @media (max-width: 1200px) {
@@ -125,7 +223,6 @@
 @media (max-width: 900px) {
   .dashboard-container {
     flex-direction: column;
-    padding: 0;
   }
   .dashboard-main {
     padding: 24px;

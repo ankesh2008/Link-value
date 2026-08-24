@@ -1,19 +1,29 @@
 .resource-card {
   background-color: #111827;
   border: 1px solid #1e293b;
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 14px;
+  padding: 22px 20px 18px;
   display: flex;
   flex-direction: column;
   transition: all var(--transition-base);
   position: relative;
+  overflow: hidden;
+}
+
+.card-accent-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  opacity: 0.85;
 }
 
 .resource-card:hover {
   border-color: #2d3f56;
   background-color: #162032;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
 }
 
 .card-top {
@@ -29,20 +39,23 @@
   gap: 6px;
   font-size: 0.72rem;
   font-weight: 700;
-  color: #00e5ff;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.breadcrumb-separator {
+.card-semester {
   color: #64748b;
+}
+
+.breadcrumb-separator {
+  color: #475569;
 }
 
 .status-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   font-weight: 600;
   padding: 3px 10px;
   border-radius: 50px;
@@ -62,6 +75,7 @@
   height: 6px;
   background-color: #10b981;
   border-radius: 50%;
+  box-shadow: 0 0 6px #10b981;
 }
 
 .status-inprogress {
@@ -75,6 +89,7 @@
   height: 6px;
   background-color: #f59e0b;
   border-radius: 50%;
+  box-shadow: 0 0 6px #f59e0b;
 }
 
 .status-toread {
@@ -101,7 +116,7 @@
 .card-desc {
   font-size: 0.88rem;
   color: #94a3b8;
-  line-height: 1.5;
+  line-height: 1.55;
   margin-bottom: 16px;
   flex: 1;
 }
@@ -147,7 +162,7 @@
   color: #f1f5f9;
   font-size: 0.82rem;
   font-weight: 600;
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: 6px;
   transition: all var(--transition-fast);
   text-decoration: none;
@@ -163,7 +178,7 @@
 }
 
 .domain-label {
-  font-size: 0.76rem;
+  font-size: 0.75rem;
   color: #64748b;
   font-weight: 400;
   margin-left: 4px;

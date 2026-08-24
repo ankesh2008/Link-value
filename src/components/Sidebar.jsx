@@ -1,24 +1,18 @@
 import React from 'react';
 import './Sidebar.css';
-import { RotateCcw } from 'lucide-react';
+import { RotateCcw, Code, Brain, Globe, GraduationCap, Layers } from 'lucide-react';
 
-const CATEGORIES = ['All Resources', 'Core CS', 'AI/ML', 'Web Dev', 'Academics'];
-const SEMESTERS = [
-  'All Semesters',
-  'Semester 1',
-  'Semester 2',
-  'Semester 3',
-  'Semester 4',
-  'Semester 5',
-  'Semester 6',
-  'Semester 7'
+const CATEGORIES = [
+  { name: 'All Resources', icon: <Layers size={15} /> },
+  { name: 'Core CS', icon: <Code size={15} color="#10b981" /> },
+  { name: 'AI/ML', icon: <Brain size={15} color="#a855f7" /> },
+  { name: 'Web Dev', icon: <Globe size={15} color="#00e5ff" /> },
+  { name: 'Academics', icon: <GraduationCap size={15} color="#f59e0b" /> }
 ];
 
 export default function Sidebar({
   selectedCategory,
   onSelectCategory,
-  selectedSemester,
-  onSelectSemester,
   categoryCounts,
   onResetData
 }) {
@@ -27,16 +21,19 @@ export default function Sidebar({
       <div className="sidebar-group">
         <div className="sidebar-group-title">CATEGORIES</div>
         <nav className="sidebar-menu">
-          {CATEGORIES.map((cat) => {
-            const count = categoryCounts[cat] || 0;
-            const isActive = selectedCategory === cat;
+          {CATEGORIES.map((catObj) => {
+            const count = categoryCounts[catObj.name] || 0;
+            const isActive = selectedCategory === catObj.name;
             return (
               <button
-                key={cat}
+                key={catObj.name}
                 className={`sidebar-item ${isActive ? 'active' : ''}`}
-                onClick={() => onSelectCategory(cat)}
+                onClick={() => onSelectCategory(catObj.name)}
               >
-                <span className="sidebar-item-label">{cat}</span>
+                <div className="sidebar-item-left">
+                  <span className="sidebar-cat-icon">{catObj.icon}</span>
+                  <span className="sidebar-item-label">{catObj.name}</span>
+                </div>
                 <span className={`sidebar-badge ${isActive ? 'active' : ''}`}>
                   {count}
                 </span>
@@ -46,28 +43,10 @@ export default function Sidebar({
         </nav>
       </div>
 
-      <div className="sidebar-group">
-        <div className="sidebar-group-title">SEMESTER</div>
-        <nav className="sidebar-menu">
-          {SEMESTERS.map((sem) => {
-            const isActive = selectedSemester === sem;
-            return (
-              <button
-                key={sem}
-                className={`sidebar-item ${isActive ? 'active' : ''}`}
-                onClick={() => onSelectSemester(sem)}
-              >
-                <span className="sidebar-item-label">{sem}</span>
-              </button>
-            );
-          })}
-        </nav>
-      </div>
-
       <div className="sidebar-footer">
         <div className="sidebar-status">
           <span className="status-dot"></span>
-          <span>Saved locally in your browser</span>
+          <span>Saved locally in browser</span>
         </div>
         <button className="sidebar-reset-btn" onClick={onResetData} title="Reset to default links">
           <RotateCcw size={12} />

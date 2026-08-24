@@ -17,6 +17,21 @@ export default function ResourceCard({
     }
   };
 
+  const getCategoryColor = (cat) => {
+    switch (cat) {
+      case 'Web Dev':
+        return '#00e5ff';
+      case 'AI/ML':
+        return '#a855f7';
+      case 'Core CS':
+        return '#10b981';
+      case 'Academics':
+        return '#f59e0b';
+      default:
+        return '#00e5ff';
+    }
+  };
+
   const getStatusClass = (status) => {
     switch (status) {
       case 'Mastered':
@@ -32,11 +47,21 @@ export default function ResourceCard({
     ? resource.url
     : `https://${resource.url}`;
 
+  const categoryColor = getCategoryColor(resource.category);
+
   return (
     <article className="resource-card">
+      {/* Top Category Accent Line */}
+      <div
+        className="card-accent-line"
+        style={{ backgroundColor: categoryColor }}
+      ></div>
+
       <div className="card-top">
         <div className="card-breadcrumb">
-          <span className="card-category">{resource.category}</span>
+          <span className="card-category" style={{ color: categoryColor }}>
+            {resource.category}
+          </span>
           <span className="breadcrumb-separator">·</span>
           <span className="card-semester">{resource.semester}</span>
         </div>
@@ -44,7 +69,7 @@ export default function ResourceCard({
         <button
           className={`status-pill ${getStatusClass(resource.status)}`}
           onClick={() => onStatusToggle(resource.id)}
-          title="Click to change status"
+          title="Click to cycle status"
         >
           <span className="pill-dot"></span>
           <span>{resource.status}</span>
@@ -76,7 +101,7 @@ export default function ResourceCard({
           rel="noopener noreferrer"
           className="visit-btn"
         >
-          <span>Visit</span>
+          <span>Launch Resource</span>
           <ExternalLink size={13} className="visit-icon" />
           <span className="domain-label">{getHostname(resource.url)}</span>
         </a>
@@ -86,7 +111,7 @@ export default function ResourceCard({
           onClick={() => onDelete(resource.id)}
           title="Delete resource"
         >
-          <Trash2 size={15} />
+          <Trash2 size={14} />
         </button>
       </div>
     </article>

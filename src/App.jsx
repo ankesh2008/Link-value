@@ -103,13 +103,18 @@ export default function App() {
         onOpenAddModal={() => setIsAddModalOpen(true)}
       />
 
-      {/* 2. Hero Banner */}
-      <Hero />
+      {/* 2. Interactive Cyber Hero Banner */}
+      <Hero
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onSelectCategory={setSelectedCategory}
+        onOpenAddModal={() => setIsAddModalOpen(true)}
+      />
 
       {/* 3. Features "WHY LINK VALUE" */}
       <Features />
 
-      {/* 4. Interactive CS Resources Dashboard */}
+      {/* 4. Interactive CS Resources Dashboard & Matrix */}
       <Dashboard
         resources={filteredResources}
         selectedCategory={selectedCategory}
