@@ -1,56 +1,79 @@
-/* Global Theme Variables for linkvalue */
+/* ============================================
+   Link Value — Home Page Styles & Global Variables
+   Theme: Dark navy + Teal/Cyan accents
+   ============================================ */
+
 :root {
-  --bg-main: #f8fafc;
-  --bg-sidebar: #ffffff;
-  --bg-card: #ffffff;
-  --bg-card-hover: #ffffff;
-  --bg-input: #f1f5f9;
-  --bg-modal: #ffffff;
-  --bg-badge: #f1f5f9;
-  
-  --border-subtle: #e2e8f0;
-  --border-hover: #cbd5e1;
-  --border-accent: rgba(79, 70, 229, 0.3);
-  
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
-  
-  --accent-primary: #4f46e5;
-  --accent-primary-hover: #4338ca;
-  --accent-cyan: #0284c7;
-  --accent-glow: rgba(79, 70, 229, 0.12);
-  
-  --status-mastered: #059669;
-  --status-inprogress: #d97706;
-  --status-toread: #64748b;
-  
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 18px;
-  --radius-full: 9999px;
-  
-  --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  --font-sans: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --bg-primary: #0b1120;
+  --bg-secondary: #0d1525;
+  --bg-card: #111827;
+  --bg-card-hover: #162032;
+  --border-color: #1e293b;
+  --border-hover: #2d3f56;
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --accent: #00e5ff;
+  --accent-glow: rgba(0, 229, 255, 0.15);
+  --accent-hover: #00c8e0;
+  --accent-dark: #006b7a;
+
+  --green: #10b981;
+  --green-glow: rgba(16, 185, 129, 0.15);
+  --purple: #a855f7;
+  --purple-glow: rgba(168, 85, 247, 0.15);
+  --amber: #f59e0b;
+  --amber-glow: rgba(245, 158, 11, 0.15);
+  --rose: #f43f5e;
+
+  --font-primary: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --shadow-glow: 0 0 40px rgba(0, 229, 255, 0.12);
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
 }
 
 body {
-  font-family: var(--font-sans);
-  background-color: var(--bg-main);
+  font-family: var(--font-primary);
+  background: var(--bg-primary);
   color: var(--text-primary);
-  line-height: 1.5;
+  line-height: 1.6;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
-  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--transition-fast);
+}
+
+img {
+  display: block;
+  max-width: 100%;
 }
 
 /* Custom Minimal Scrollbar */
@@ -60,16 +83,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-main);
+  background: var(--bg-primary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: var(--radius-full);
+  background: #1e293b;
+  border-radius: 99px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #334155;
 }
 
 button {
@@ -85,7 +108,15 @@ input, textarea, select {
   color: inherit;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent), #38bdf8, var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

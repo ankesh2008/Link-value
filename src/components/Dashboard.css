@@ -1,0 +1,136 @@
+.dashboard-section {
+  padding: 40px 0 80px;
+  background-color: #0b1120;
+  min-height: 100vh;
+}
+
+.dashboard-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  gap: 32px;
+  background-color: #0d1525;
+  border: 1px solid #1e293b;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+}
+
+.dashboard-main {
+  flex: 1;
+  padding: 32px 32px 40px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.dashboard-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #f1f5f9;
+  line-height: 1.1;
+}
+
+.dashboard-count {
+  font-size: 0.88rem;
+  color: #64748b;
+  margin-top: 4px;
+  display: block;
+}
+
+.active-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-chip {
+  font-size: 0.78rem;
+  font-weight: 600;
+  background-color: rgba(0, 229, 255, 0.12);
+  color: #00e5ff;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  padding: 4px 10px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chip-remove {
+  cursor: pointer;
+}
+
+.clear-all-filters-btn {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.clear-all-filters-btn:hover {
+  color: #00e5ff;
+}
+
+/* 3-Column Responsive Grid matching media_1787542931834.png */
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.dashboard-empty {
+  padding: 60px 20px;
+  text-align: center;
+  background-color: #111827;
+  border: 1px dashed #1e293b;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.empty-icon {
+  color: #64748b;
+}
+
+.empty-reset-btn {
+  margin-top: 8px;
+  padding: 8px 18px;
+  background-color: #00e5ff;
+  color: #0b1120;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 1200px) {
+  .resource-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard-container {
+    flex-direction: column;
+    padding: 0;
+  }
+  .dashboard-main {
+    padding: 24px;
+  }
+  .resource-grid {
+    grid-template-columns: 1fr;
+  }
+}

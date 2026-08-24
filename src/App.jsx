@@ -1,71 +1,86 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
-import ResourceCard from './components/ResourceCard';
+import Hero from './components/Hero';
+import Features from './components/Features';
+import Dashboard from './components/Dashboard';
+import CategoriesSection from './components/CategoriesSection';
+import StatsSection from './components/StatsSection';
+import CtaSection from './components/CtaSection';
+import Footer from './components/Footer';
 import AddResourceModal from './components/AddResourceModal';
-import AskDoubtModal from './components/AskDoubtModal';
-import { INITIAL_RESOURCES } from './data/resources';
-import { fetchStudyTip } from './utils/api';
-import { Zap, X } from 'lucide-react';
+import ChatBot from './components/ChatBot';
+import {
+  getStoredResources,
+  saveResources,
+  resetResourcesToDefault
+} from './utils/storage';
 
 export default function App() {
-  // State 1: JavaScript array initialized into useState
-  const [resources, setResources] = useState(INITIAL_RESOURCES);
-
-  // State 2: Selected Category filter ('All', 'Core CS', 'Web Dev', etc.)
-  const [selectedCategory, setSelectedCategory] = useState('All');
-
-  // State 3: Search input text
+  const [resources, setResources] = useState(() => getStoredResources());
+  const [selectedCategory, setSelectedCategory] = useState('All Resources');
+  const [selectedSemester, setSelectedSemester] = useState('All Semesters');
+  const [selectedTag, setSelectedTag] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
-  // State 4 & 5: Modal visibility booleans
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDoubtOpen, setIsDoubtOpen] = useState(false);
+  // Sync to localStorage
+  useEffect(() => {
+    saveResources(resources);
+  }, [resources]);
 
-  // State 6 & 7: API Quote state & loading status
-  const [apiTip, setApiTip] = useState(null);
-  const [isLoadingApi, setIsLoadingApi] = useState(false);
-
-  // Compute category count badges using Array.filter()
+  // Compute category count badges
   const categoryCounts = {
-    All: resources.length,
+    'All Resources': resources.length,
     'Core CS': resources.filter((r) => r.category === 'Core CS').length,
+    'AI/ML': resources.filter((r) => r.category === 'AI/ML').length,
     'Web Dev': resources.filter((r) => r.category === 'Web Dev').length,
-    'AI & ML': resources.filter((r) => r.category === 'AI & ML').length,
-    Academics: resources.filter((r) => r.category === 'Academics').length
+    'Academics': resources.filter((r) => r.category === 'Academics').length
   };
 
-  // Filter resources using standard JavaScript Array.filter()
+  // Filter resources
   const filteredResources = resources.filter((item) => {
     const matchCategory =
-      selectedCategory === 'All' || item.category === selectedCategory;
+      selectedCategory === 'All Resources' || item.category === selectedCategory;
+
+    const matchSemester =
+      selectedSemester === 'All Semesters' || item.semester === selectedSemester;
+
+    const matchTag =
+      !selectedTag || (item.tags && item.tags.includes(selectedTag));
 
     const matchSearch =
       !searchQuery.trim() ||
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchQuery.toLowerCase());
+      item.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (item.semester && item.semester.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (item.tags && item.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase())));
 
-    return matchCategory && matchSearch;
+    return matchCategory && matchSemester && matchTag && matchSearch;
   });
 
-  // API Call Handler using async/await & fetch API
-  const handleFetchApiTip = async () => {
-    setIsLoadingApi(true);
-    try {
-      const data = await fetchStudyTip();
-      setApiTip(data);
-    } catch (err) {
-      alert('API Call Failed. Check your network connection.');
-    } finally {
-      setIsLoadingApi(false);
-    }
+  // Handlers
+  const handleStatusToggle = (id) => {
+    setResources(
+      resources.map((item) => {
+        if (item.id === id) {
+          const nextStatus =
+            item.status === 'To Read'
+              ? 'In Progress'
+              : item.status === 'In Progress'
+              ? 'Mastered'
+              : 'To Read';
+          return { ...item, status: nextStatus };
+        }
+        return item;
+      })
+    );
   };
 
-  // Event Handlers
-  const handleAddResource = (newResource) => {
-    setResources([newResource, ...resources]);
+  const handleAddResource = (newRes) => {
+    setResources([newRes, ...resources]);
   };
 
   const handleDeleteResource = (id) => {
@@ -73,115 +88,83 @@ export default function App() {
   };
 
   const handleResetData = () => {
-    setResources(INITIAL_RESOURCES);
-    setSelectedCategory('All');
+    const reset = resetResourcesToDefault();
+    setResources(reset);
+    setSelectedCategory('All Resources');
+    setSelectedSemester('All Semesters');
+    setSelectedTag(null);
     setSearchQuery('');
-    setApiTip(null);
   };
 
   return (
-    <div className="app-container">
-      {/* 1. Navbar Component with Ask Doubt & API Quote Buttons */}
+    <div className="app-wrapper">
+      {/* 1. Header Navbar */}
       <Navbar
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
-        onOpenAddModal={() => setIsModalOpen(true)}
-        onFetchApi={handleFetchApiTip}
-        isLoadingApi={isLoadingApi}
-        onOpenDoubtModal={() => setIsDoubtOpen(true)}
+        onOpenAddModal={() => setIsAddModalOpen(true)}
+        onToggleChat={() => setIsChatOpen(!isChatOpen)}
+        isChatOpen={isChatOpen}
       />
 
-      {/* Main Body with Sidebar & Card Grid */}
-      <div className="main-layout">
-        {/* 2. Sidebar Component */}
-        <Sidebar
-          selectedCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
-          categoryCounts={categoryCounts}
-          onResetData={handleResetData}
-        />
+      {/* 2. Hero Banner */}
+      <Hero />
 
-        {/* 3. Main Dashboard Viewport */}
-        <main className="dashboard-content">
-          {/* API Data Banner */}
-          {apiTip && (
-            <div className="api-banner">
-              <div className="api-banner-content">
-                <Zap size={16} className="zap-icon" />
-                <div>
-                  <span className="api-tag">API Response (fetch & async/await):</span>
-                  <p className="api-quote">"{apiTip.quote}" — <strong>{apiTip.author}</strong></p>
-                </div>
-              </div>
-              <button className="close-banner-btn" onClick={() => setApiTip(null)}>
-                <X size={14} />
-              </button>
-            </div>
-          )}
+      {/* 3. Features "WHY LINK VALUE" */}
+      <Features />
 
-          <div className="section-header">
-            <div>
-              <h2 className="section-title">
-                {selectedCategory === 'All' ? 'All Resources' : selectedCategory}
-              </h2>
-              <p className="section-subtitle">
-                Showing {filteredResources.length}{' '}
-                {filteredResources.length === 1 ? 'resource' : 'resources'}
-              </p>
-            </div>
+      {/* 4. Interactive CS Resources Dashboard (Matching media_1787542931834.png) */}
+      <Dashboard
+        resources={filteredResources}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+        selectedSemester={selectedSemester}
+        onSelectSemester={setSelectedSemester}
+        selectedTag={selectedTag}
+        onSelectTag={setSelectedTag}
+        searchQuery={searchQuery}
+        onClearSearch={() => setSearchQuery('')}
+        categoryCounts={categoryCounts}
+        onStatusToggle={handleStatusToggle}
+        onDeleteResource={handleDeleteResource}
+        onResetData={handleResetData}
+      />
 
-            {(selectedCategory !== 'All' || searchQuery) && (
-              <button
-                className="clear-filter-btn"
-                onClick={() => {
-                  setSelectedCategory('All');
-                  setSearchQuery('');
-                }}
-              >
-                Clear Filters
-              </button>
-            )}
-          </div>
+      {/* 5. Browse Categories Section */}
+      <CategoriesSection
+        onSelectCategory={(cat) => {
+          setSelectedCategory(cat);
+          const dash = document.getElementById('dashboard');
+          if (dash) dash.scrollIntoView({ behavior: 'smooth' });
+        }}
+      />
 
-          {/* Responsive CSS Grid of Resource Cards */}
-          {filteredResources.length > 0 ? (
-            <div className="resource-grid">
-              {filteredResources.map((resource) => (
-                <ResourceCard
-                  key={resource.id}
-                  resource={resource}
-                  onDelete={handleDeleteResource}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="empty-state">
-              <p>No study resources found matching your search.</p>
-              <button
-                className="reset-btn"
-                onClick={() => {
-                  setSelectedCategory('All');
-                  setSearchQuery('');
-                }}
-              >
-                Reset Filters
-              </button>
-            </div>
-          )}
-        </main>
-      </div>
+      {/* 6. Stats Section */}
+      <StatsSection />
 
-      {/* 4. Add Resource Modal Component */}
+      {/* 7. CTA Section */}
+      <CtaSection onOpenAddModal={() => setIsAddModalOpen(true)} />
+
+      {/* 8. Footer */}
+      <Footer
+        onSelectCategory={(cat) => {
+          setSelectedCategory(cat);
+          const dash = document.getElementById('dashboard');
+          if (dash) dash.scrollIntoView({ behavior: 'smooth' });
+        }}
+        onOpenAddModal={() => setIsAddModalOpen(true)}
+      />
+
+      {/* Modals & Drawers */}
       <AddResourceModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
         onAddResource={handleAddResource}
       />
 
-      {/* 5. Free CS Doubt Solver Modal */}
-      <AskDoubtModal
-        isOpen={isDoubtOpen}
-        onClose={() => setIsDoubtOpen(false)}
+      <ChatBot
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
       />
     </div>
   );

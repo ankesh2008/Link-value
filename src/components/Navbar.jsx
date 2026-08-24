@@ -1,64 +1,74 @@
-import React from 'react';
-import { Search, Plus, X, Link2, Zap, HelpCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import './Navbar.css';
+import { Search, Plus, Sparkles } from 'lucide-react';
 
 export default function Navbar({
   searchQuery,
   onSearchChange,
   onOpenAddModal,
-  onFetchApi,
-  isLoadingApi,
-  onOpenDoubtModal
+  onToggleChat,
+  isChatOpen
 }) {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header className="navbar">
-      <div className="navbar-brand">
-        <div className="brand-logo">
-          <Link2 size={18} />
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`} id="navbar">
+      <div className="nav-left">
+        <a href="#hero" className="logo" id="logo">
+          <div className="logo-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <rect width="28" height="28" rx="6" fill="#00e5ff" />
+              <path d="M8 9h12M8 14h8M8 19h10" stroke="#0a0e1a" strokeWidth="2.2" strokeLinecap="round" />
+            </svg>
+          </div>
+          <div className="logo-text">
+            <span className="logo-name">Link Value</span>
+            <span className="logo-sub">CS RESOURCE HUB</span>
+          </div>
+        </a>
+      </div>
+
+      <div className="nav-center">
+        <div className="search-bar" id="search-bar">
+          <Search size={18} className="search-icon" />
+          <input
+            type="text"
+            placeholder="What are you looking for?"
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            id="search-input"
+          />
         </div>
-        <h1 className="brand-name">linkvalue</h1>
       </div>
 
-      <div className="search-box">
-        <Search size={16} className="search-icon" />
-        <input
-          type="text"
-          placeholder="Search by title, category, or description..."
-          value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
-          className="search-input"
-        />
-        {searchQuery && (
-          <button className="clear-search-btn" onClick={() => onSearchChange('')}>
-            <X size={14} />
-          </button>
-        )}
-      </div>
-
-      <div className="nav-actions">
+      <div className="nav-right">
+        <a href="#dashboard" className="nav-link" id="nav-dashboard">DASHBOARD</a>
+        <a href="#explore" className="nav-link" id="nav-about">ABOUT US</a>
+        <a href="#categories" className="nav-link" id="nav-contact">CATEGORIES</a>
+        <a href="#cta" className="nav-link" id="nav-faq">FAQ</a>
+        
         <button
-          className="api-fetch-btn"
-          onClick={onOpenDoubtModal}
-          title="Free Doubt Solver (100% Free, Zero Key Needed)"
+          className={`ai-nav-btn ${isChatOpen ? 'active' : ''}`}
+          onClick={onToggleChat}
+          title="Open Link Value AI Assistant"
         >
-          <HelpCircle size={15} />
-          <span>Ask Doubt</span>
+          <Sparkles size={15} />
+          <span>AI Assistant</span>
         </button>
 
-        <button
-          className="api-fetch-btn"
-          onClick={onFetchApi}
-          disabled={isLoadingApi}
-          title="Demonstrate API Call with fetch() and async/await"
-        >
-          <Zap size={15} />
-          <span>{isLoadingApi ? 'Fetching...' : 'API Quote'}</span>
-        </button>
-
-        <button className="add-resource-btn" onClick={onOpenAddModal}>
+        <button className="nav-add-btn" onClick={onOpenAddModal}>
           <Plus size={16} />
-          <span>Add Resource</span>
+          <span>+ Add Resource</span>
         </button>
       </div>
-    </header>
+    </nav>
   );
 }

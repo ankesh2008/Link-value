@@ -1,38 +1,93 @@
 import React from 'react';
+import './ResourceCard.css';
 import { ExternalLink, Trash2 } from 'lucide-react';
 
-export default function ResourceCard({ resource, onDelete }) {
-  
+export default function ResourceCard({
+  resource,
+  onStatusToggle,
+  onTagClick,
+  onDelete
+}) {
+  const getHostname = (url) => {
+    try {
+      const parsed = new URL(url.startsWith('http') ? url : `https://${url}`);
+      return parsed.hostname.replace(/^www\./, '');
+    } catch {
+      return url;
+    }
+  };
+
+  const getStatusClass = (status) => {
+    switch (status) {
+      case 'Mastered':
+        return 'status-mastered';
+      case 'In Progress':
+        return 'status-inprogress';
+      default:
+        return 'status-toread';
+    }
+  };
+
   const targetUrl = resource.url.startsWith('http')
     ? resource.url
     : `https://${resource.url}`;
 
   return (
     <article className="resource-card">
-      <div className="card-header">
-        <span className="category-badge">{resource.category}</span>
+      <div className="card-top">
+        <div className="card-breadcrumb">
+          <span className="card-category">{resource.category}</span>
+          <span className="breadcrumb-separator">·</span>
+          <span className="card-semester">{resource.semester}</span>
+        </div>
+
         <button
-          className="delete-btn"
-          onClick={() => onDelete(resource.id)}
-          title="Delete resource"
+          className={`status-pill ${getStatusClass(resource.status)}`}
+          onClick={() => onStatusToggle(resource.id)}
+          title="Click to change status"
         >
-          <Trash2 size={14} />
+          <span className="pill-dot"></span>
+          <span>{resource.status}</span>
         </button>
       </div>
 
       <h3 className="card-title">{resource.title}</h3>
-      <p className="card-description">{resource.description}</p>
+      <p className="card-desc">{resource.description}</p>
+
+      {resource.tags && resource.tags.length > 0 && (
+        <div className="card-tags">
+          {resource.tags.map((tag) => (
+            <button
+              key={tag}
+              className="tag-pill"
+              onClick={() => onTagClick(tag)}
+              title={`Filter by #${tag}`}
+            >
+              #{tag}
+            </button>
+          ))}
+        </div>
+      )}
 
       <div className="card-footer">
         <a
           href={targetUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="open-resource-btn"
+          className="visit-btn"
         >
-          <span>Open Resource</span>
-          <ExternalLink size={14} />
+          <span>Visit</span>
+          <ExternalLink size={13} className="visit-icon" />
+          <span className="domain-label">{getHostname(resource.url)}</span>
         </a>
+
+        <button
+          className="delete-card-btn"
+          onClick={() => onDelete(resource.id)}
+          title="Delete resource"
+        >
+          <Trash2 size={15} />
+        </button>
       </div>
     </article>
   );
