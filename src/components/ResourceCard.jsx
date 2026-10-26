@@ -17,21 +17,6 @@ export default function ResourceCard({
     }
   };
 
-  const getCategoryColor = (cat) => {
-    switch (cat) {
-      case 'Web Dev':
-        return '#00e5ff';
-      case 'AI/ML':
-        return '#a855f7';
-      case 'Core CS':
-        return '#10b981';
-      case 'Academics':
-        return '#f59e0b';
-      default:
-        return '#00e5ff';
-    }
-  };
-
   const getStatusClass = (status) => {
     switch (status) {
       case 'Mastered':
@@ -47,7 +32,7 @@ export default function ResourceCard({
     ? resource.url
     : `https://${resource.url}`;
 
-  const categoryColor = getCategoryColor(resource.category);
+  const categoryColor = 'var(--accent)';
 
   return (
     <article className="resource-card">
@@ -101,7 +86,7 @@ export default function ResourceCard({
           rel="noopener noreferrer"
           className="visit-btn"
         >
-          <span>Launch Resource</span>
+          <span>Open resource</span>
           <ExternalLink size={13} className="visit-icon" />
           <span className="domain-label">{getHostname(resource.url)}</span>
         </a>

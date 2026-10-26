@@ -77,4 +77,13 @@ const filteredResources = resources.filter((item) => {
 2. **Start Dev Server**: `npm run dev`
 3. **Open Browser**: `http://localhost:3000/`
 4. **Build Production Version**: `npm run build`
+
+## Authentication API
+
+The login and sign-up forms validate input in the browser and submit JSON requests to:
+
+- `POST /api/auth/login` with `{ "email", "password" }`
+- `POST /api/auth/signup` with `{ "name", "email", "password" }`
+
+Set `VITE_API_BASE_URL` in a local `.env` file to point at the API server (for example, `VITE_API_BASE_URL=https://api.example.com`). Successful endpoints should return JSON containing a `user` object, such as `{ "user": { "name": "Ada", "email": "ada@example.com" } }`; API errors are shown in the form. This project does not include an authentication backend.
 # Link-value

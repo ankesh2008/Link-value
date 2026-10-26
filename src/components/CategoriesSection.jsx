@@ -1,8 +1,47 @@
 import React from 'react';
 import './CategoriesSection.css';
-import { Code, Brain, Globe, GraduationCap } from 'lucide-react';
+import { Code, Brain, Globe, GraduationCap, BookOpen } from 'lucide-react';
+import CategoryLink from './CategoryLink';
 
-export default function CategoriesSection({ onSelectCategory }) {
+const CATEGORIES = [
+  {
+    category: 'Core CS',
+    title: 'Core CS',
+    description: 'Data structures, algorithms, system design, and foundational CS concepts.',
+    count: 2,
+    icon: Code
+  },
+  {
+    category: 'AI/ML',
+    title: 'AI / ML',
+    description: 'Deep learning, NLP, transformers, and practical machine learning courses.',
+    count: 3,
+    icon: Brain
+  },
+  {
+    category: 'Web Dev',
+    title: 'Web Development',
+    description: 'Frontend, backend, React, modern CSS, and full-stack development resources.',
+    count: 3,
+    icon: Globe
+  },
+  {
+    category: 'Academics',
+    title: 'Academics',
+    description: 'Operating systems, missing semester tools, and university-level CS education.',
+    count: 2,
+    icon: GraduationCap
+  },
+  {
+    category: 'Learning Roadmap',
+    title: 'Frontend learning roadmap',
+    description: 'A guided 72-week path from HTML and CSS through React, routing, and real API projects.',
+    count: 12,
+    icon: BookOpen
+  }
+];
+
+export default function CategoriesSection({ onSelectCategory, categoryCounts }) {
   return (
     <section className="categories-section" id="categories">
       <div className="section-container">
@@ -14,65 +53,14 @@ export default function CategoriesSection({ onSelectCategory }) {
         </div>
 
         <div className="categories-grid">
-          <a
-            href="#dashboard"
-            className="category-card"
-            id="cat-core-cs"
-            onClick={() => onSelectCategory('Core CS')}
-          >
-            <div className="category-glow" style={{ '--glow-color': '#00e5ff' }}></div>
-            <div className="category-icon">
-              <Code size={40} color="#00e5ff" />
-            </div>
-            <h3>Core CS</h3>
-            <p>Data structures, algorithms, system design, and foundational CS concepts.</p>
-            <span className="category-count">2 Resources</span>
-          </a>
-
-          <a
-            href="#dashboard"
-            className="category-card"
-            id="cat-aiml"
-            onClick={() => onSelectCategory('AI/ML')}
-          >
-            <div className="category-glow" style={{ '--glow-color': '#a855f7' }}></div>
-            <div className="category-icon">
-              <Brain size={40} color="#a855f7" />
-            </div>
-            <h3>AI / ML</h3>
-            <p>Deep learning, NLP, transformers, and practical machine learning courses.</p>
-            <span className="category-count">3 Resources</span>
-          </a>
-
-          <a
-            href="#dashboard"
-            className="category-card"
-            id="cat-webdev"
-            onClick={() => onSelectCategory('Web Dev')}
-          >
-            <div className="category-glow" style={{ '--glow-color': '#10b981' }}></div>
-            <div className="category-icon">
-              <Globe size={40} color="#10b981" />
-            </div>
-            <h3>Web Dev</h3>
-            <p>Frontend, backend, React, modern CSS, and full-stack development resources.</p>
-            <span className="category-count">3 Resources</span>
-          </a>
-
-          <a
-            href="#dashboard"
-            className="category-card"
-            id="cat-academics"
-            onClick={() => onSelectCategory('Academics')}
-          >
-            <div className="category-glow" style={{ '--glow-color': '#f59e0b' }}></div>
-            <div className="category-icon">
-              <GraduationCap size={40} color="#f59e0b" />
-            </div>
-            <h3>Academics</h3>
-            <p>Operating systems, missing semester tools, and university-level CS education.</p>
-            <span className="category-count">2 Resources</span>
-          </a>
+          {CATEGORIES.map((category) => (
+            <CategoryLink
+              key={category.category}
+              {...category}
+              count={categoryCounts[category.category] ?? category.count}
+              onSelect={onSelectCategory}
+            />
+          ))}
         </div>
       </div>
     </section>

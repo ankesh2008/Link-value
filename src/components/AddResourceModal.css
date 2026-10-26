@@ -1,9 +1,7 @@
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgba(11, 17, 32, 0.8);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background-color: rgba(27, 39, 31, 0.48);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,13 +10,13 @@
 }
 
 .modal-container {
-  background-color: #111827;
-  border: 1px solid #1e293b;
-  border-radius: 16px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   width: 100%;
   max-width: 520px;
   overflow: hidden;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 24px 80px rgba(24, 37, 27, 0.22);
   animation: modalPop 0.3s ease-out;
 }
 
@@ -38,17 +36,17 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px 24px;
-  border-bottom: 1px solid #1e293b;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .modal-header h2 {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .close-btn {
-  color: #94a3b8;
+  color: var(--text-secondary);
   background: transparent;
   border: none;
   cursor: pointer;
@@ -56,7 +54,7 @@
 }
 
 .close-btn:hover {
-  color: #00e5ff;
+  color: var(--accent);
 }
 
 .modal-form {
@@ -67,11 +65,11 @@
 }
 
 .modal-error {
-  background-color: rgba(244, 63, 94, 0.15);
-  border: 1px solid rgba(244, 63, 94, 0.3);
-  color: #f43f5e;
+  background-color: rgba(232, 224, 207, 0.08);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
   padding: 8px 12px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.84rem;
 }
 
@@ -93,18 +91,18 @@
 .form-group label {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #94a3b8;
+  color: var(--text-secondary);
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-  background-color: #0d1525;
-  border: 1px solid #1e293b;
-  border-radius: 8px;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
   padding: 10px 14px;
   font-size: 0.9rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
   outline: none;
   transition: border-color var(--transition-fast);
 }
@@ -112,8 +110,8 @@
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-  border-color: #00e5ff;
-  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.15);
+  border-color: var(--accent);
+  box-shadow: none;
 }
 
 .modal-actions {
@@ -127,16 +125,16 @@
 .cancel-btn {
   padding: 10px 20px;
   background: transparent;
-  border: 1px solid #1e293b;
-  border-radius: 8px;
-  color: #94a3b8;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
   font-weight: 600;
   cursor: pointer;
 }
 
 .cancel-btn:hover {
-  color: #f1f5f9;
-  border-color: #334155;
+  color: var(--text-primary);
+  border-color: var(--border-hover);
 }
 
 .save-btn {
@@ -144,16 +142,16 @@
   align-items: center;
   gap: 6px;
   padding: 10px 24px;
-  background-color: #00e5ff;
-  color: #0b1120;
+  background-color: var(--accent);
+  color: var(--bg-primary);
   font-weight: 700;
   font-size: 0.88rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
   transition: background-color var(--transition-fast);
 }
 
 .save-btn:hover {
-  background-color: #00c8e0;
+  background-color: var(--accent-hover);
 }

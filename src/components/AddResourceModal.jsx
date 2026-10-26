@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './AddResourceModal.css';
 import { X, Plus } from 'lucide-react';
 
-const CATEGORIES = ['Core CS', 'AI/ML', 'Web Dev', 'Academics'];
+const CATEGORIES = ['Core CS', 'AI/ML', 'Web Dev', 'Academics', 'Learning Roadmap'];
 const SEMESTERS = [
   'Semester 1',
   'Semester 2',
@@ -10,7 +10,19 @@ const SEMESTERS = [
   'Semester 4',
   'Semester 5',
   'Semester 6',
-  'Semester 7'
+  'Semester 7',
+  'Weeks 1–6',
+  'Weeks 7–12',
+  'Weeks 13–18',
+  'Weeks 19–24',
+  'Weeks 25–30',
+  'Weeks 31–36',
+  'Weeks 37–42',
+  'Weeks 43–48',
+  'Weeks 49–54',
+  'Weeks 55–60',
+  'Weeks 61–66',
+  'Weeks 67–72'
 ];
 
 export default function AddResourceModal({ isOpen, onClose, onAddResource }) {
@@ -105,7 +117,7 @@ export default function AddResourceModal({ isOpen, onClose, onAddResource }) {
             </div>
 
             <div className="form-group flex-1">
-              <label>Semester</label>
+              <label>Study period</label>
               <select value={semester} onChange={(e) => setSemester(e.target.value)}>
                 {SEMESTERS.map((sem) => (
                   <option key={sem} value={sem}>{sem}</option>

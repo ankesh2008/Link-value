@@ -2,7 +2,7 @@ import React from 'react';
 import './CtaSection.css';
 import { ArrowRight } from 'lucide-react';
 
-export default function CtaSection({ onOpenAddModal }) {
+export default function CtaSection({ onExplore, onOpenAddModal }) {
   return (
     <section className="cta-section" id="cta">
       <div className="section-container">
@@ -11,12 +11,12 @@ export default function CtaSection({ onOpenAddModal }) {
           <h2>Ready to start learning?</h2>
           <p>Dive into our curated collection of the best CS resources — completely free.</p>
           <div className="cta-buttons">
-            <a href="#dashboard" className="hero-cta" id="cta-explore">
+            <button type="button" className="hero-cta" id="cta-explore" onClick={onExplore}>
               <span>Browse All Resources</span>
               <ArrowRight size={20} className="cta-arrow" />
-            </a>
+            </button>
             <button className="cta-secondary" id="cta-add" onClick={onOpenAddModal}>
-              + Add a Resource
+              Add a Resource
             </button>
           </div>
         </div>

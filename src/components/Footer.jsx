@@ -10,13 +10,13 @@ export default function Footer({ onSelectCategory, onOpenAddModal }) {
             <div className="logo">
               <div className="logo-icon">
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                  <rect width="28" height="28" rx="6" fill="#00e5ff" />
-                  <path d="M8 9h12M8 14h8M8 19h10" stroke="#0a0e1a" strokeWidth="2.2" strokeLinecap="round" />
+                  <rect width="28" height="28" rx="6" fill="currentColor" />
+                  <path d="M8 9h12M8 14h8M8 19h10" stroke="var(--bg-primary)" strokeWidth="2.2" strokeLinecap="round" />
                 </svg>
               </div>
               <div className="logo-text">
-                <span class="logo-name">Link Value</span>
-                <span class="logo-sub">CS RESOURCE HUB</span>
+                <span className="logo-name">Link Value</span>
+                <span className="logo-sub">CS RESOURCE HUB</span>
               </div>
             </div>
             <p className="footer-desc">
@@ -36,7 +36,15 @@ export default function Footer({ onSelectCategory, onOpenAddModal }) {
 
             <div className="footer-col">
               <h4>Quick Links</h4>
-              <a href="#dashboard">All Resources</a>
+              <a
+                href="#dashboard"
+                onClick={(event) => {
+                  event.preventDefault();
+                  onSelectCategory('All Resources');
+                }}
+              >
+                All Resources
+              </a>
               <button className="footer-btn-link" onClick={onOpenAddModal}>Add Resource</button>
               <a href="#explore">About Us</a>
               <a href="#cta">FAQ</a>

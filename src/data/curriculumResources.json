@@ -1,0 +1,122 @@
+[
+  {
+    "id": "curriculum-weeks-01-06",
+    "title": "Web foundations",
+    "description": "Weeks 1–6 · HTML5 structure and semantic tags, accessibility basics, CSS3 fundamentals, the box model, Flexbox, Grid, responsive design, media queries, and mobile-first layouts.",
+    "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development",
+    "category": "Learning Roadmap",
+    "semester": "Weeks 1–6",
+    "tags": ["HTML5", "Semantic HTML", "Accessibility", "CSS3", "Box Model", "Flexbox", "Grid", "Responsive Design", "Mini project: static responsive landing page"],
+    "status": "To Read"
+  },
+  {
+    "id": "curriculum-weeks-07-12",
+    "title": "JavaScript & developer tools",
+    "description": "Weeks 7–12 · Variables, functions, arrays, objects, loops, browser DevTools, VS Code setup, and Git/GitHub basics. Mini project: build a static responsive landing page.",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide",
+    "category": "Learning Roadmap",
+    "semester": "Weeks 7–12",
+    "tags": ["JavaScript Basics", "Variables", "Functions", "Arrays", "Objects", "Loops", "DevTools", "VS Code", "Git", "GitHub", "Mini project: landing page"],
+    "status": "To Read"
+  },
+  {
+    "id": "curriculum-weeks-13-18",
+    "title": "Modern JavaScript",
+    "description": "Weeks 13–18 · ES6+ let/const, arrow functions, destructuring, spread/rest, modules and imports/exports, Promises, async/await, fetch, DOM events, browser storage, JSON, and forms. Mini project: an interactive to-do app.",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide",
+    "category": "Learning Roadmap",
+    "semester": "Weeks 13–18",
+    "tags": ["ES6+", "Modules", "Promises", "Async/Await", "Fetch API", "DOM", "Events", "Browser Storage", "JSON", "Forms", "Mini project: to-do app"],
+    "status": "To Read"
+  },
+  {
+    "id": "curriculum-weeks-19-24",
+    "title": "React setup & first interactions",
+    "description": "Weeks 19–24 · Handling events and forms, controlled components, and setting up a React project with Vite or CRA. Mini project: a counter app or product-card UI.",
+    "url": "https://vite.dev/guide/",
+    "category": "Learning Roadmap",
+    "semester": "Weeks 19–24",
+    "tags": ["React Setup", "Vite", "CRA", "Events", "Forms", "Controlled Components", "Mini project: counter", "Mini project: product card"],
+    "status": "To Read"
+  },
+  {
+    "id": "curriculum-weeks-25-30",
+    "title": "React fundamentals",
+    "description": "Weeks 25–30 · React, component-based architecture, JSX, components, props, state, rendering lists, and conditional rendering.",
+    "url": "https://react.dev/learn",
+    "category": "Learning Roadmap",
+    "semester": "Weeks 25–30",
+    "tags": ["React", "Components", "JSX", "Props", "State", "Lists", "Conditional Rendering"],
+    "status": "To Read"
+  },
+  {
+    "id": "curriculum-weeks-31-36",
+    "title": "Hooks & reusable components",
+    "description": "Weeks 31–36 · useState, useEffect, useRef, useMemo, and useCallback; component composition, reusable UI, custom hooks, lifting state, and prop-drilling basics. Mini project: a weather app or notes app.",
+    "url": "https://react.dev/reference/react",
+    "category": "Learning Roadmap",
+    "semester": "Weeks 31–36",
+    "tags": ["useState", "useEffect", "useRef", "useMemo", "useCallback", "Custom Hooks", "Composition", "Lifting State", "Mini project: weather", "Mini project: notes"],
+    "status": "To Read"
+  },
+  {
+    "id": "curriculum-weeks-37-42",
+    "title": "Routing & project evaluation",
+    "description": "Weeks 37–42 · React Router basics, nested and dynamic routes, route parameters, protected routes, and 404 pages. Project-based evaluation I covers lectures 1–42.",
+    "url": "https://reactrouter.com/start/declarative/installation",
+    "category": "Learning Roadmap",
+    "semester": "Weeks 37–42",
+    "tags": ["React Router", "Nested Routes", "Dynamic Routes", "Route Params", "Protected Routes", "404", "Project Evaluation I"],
+    "status": "To Read"
+  },
+  {
+    "id": "curriculum-weeks-43-48",
+    "title": "Multi-page SPA design",
+    "description": "Weeks 43–48 · Navigation layouts, page structure, multi-page single-page-app design, and route-based composition. Mini project: a portfolio site with routing.",
+    "url": "https://reactrouter.com/start/library/routing",
+    "category": "Learning Roadmap",
+    "semester": "Weeks 43–48",
+    "tags": ["Navigation", "Layouts", "SPA", "Page Structure", "Mini project: portfolio", "Routing"],
+    "status": "To Read"
+  },
+  {
+    "id": "curriculum-weeks-49-54",
+    "title": "Shared state & async UI",
+    "description": "Weeks 49–54 · Context API, React state architecture, global vs local state, an introduction to Redux Toolkit or Zustand, and async loading/error handling. Mini project: a shopping cart or dashboard.",
+    "url": "https://react.dev/learn/passing-data-deeply-with-context",
+    "category": "Learning Roadmap",
+    "semester": "Weeks 49–54",
+    "tags": ["Context API", "State Architecture", "Global State", "Redux Toolkit", "Zustand", "Async State", "Loading", "Error Handling", "Mini project: cart", "Mini project: dashboard"],
+    "status": "To Read"
+  },
+  {
+    "id": "curriculum-weeks-55-60",
+    "title": "Forms & validation",
+    "description": "Weeks 55–60 · Form handling in React, validation strategies, and reusable input components.",
+    "url": "https://react.dev/reference/react-dom/components/input",
+    "category": "Learning Roadmap",
+    "semester": "Weeks 55–60",
+    "tags": ["React Forms", "Form Handling", "Validation", "Reusable Inputs"],
+    "status": "To Read"
+  },
+  {
+    "id": "curriculum-weeks-61-66",
+    "title": "Interactive UI patterns",
+    "description": "Weeks 61–66 · Modals, tabs, dropdowns, toast notifications, and search/filter/sort patterns. Mini project: a registration form with validation.",
+    "url": "https://www.w3.org/WAI/ARIA/apg/patterns/",
+    "category": "Learning Roadmap",
+    "semester": "Weeks 61–66",
+    "tags": ["Modals", "Tabs", "Dropdowns", "Toasts", "Search", "Filtering", "Sorting", "Mini project: validated registration"],
+    "status": "To Read"
+  },
+  {
+    "id": "curriculum-weeks-67-72",
+    "title": "APIs & data-driven apps",
+    "description": "Weeks 67–72 · REST APIs with fetch/axios, loading states, retries, error handling, pagination, infinite scroll, debounce, CRUD workflows, and third-party APIs. Mini project: a movie-search app or GitHub profile viewer.",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
+    "category": "Learning Roadmap",
+    "semester": "Weeks 67–72",
+    "tags": ["REST APIs", "Fetch", "Axios", "Loading", "Retry", "Errors", "Pagination", "Infinite Scroll", "Debounce", "CRUD", "Third-party APIs", "Mini project: movie search", "Mini project: GitHub profile"],
+    "status": "To Read"
+  }
+]

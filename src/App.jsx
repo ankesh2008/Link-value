@@ -9,6 +9,7 @@ import StatsSection from './components/StatsSection';
 import CtaSection from './components/CtaSection';
 import Footer from './components/Footer';
 import AddResourceModal from './components/AddResourceModal';
+import AuthModal from './components/AuthModal';
 import {
   getStoredResources,
   saveResources,
@@ -23,6 +24,8 @@ export default function App() {
   const [selectedTag, setSelectedTag] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState(null);
+  const [authUser, setAuthUser] = useState(null);
 
   // Sync to localStorage
   useEffect(() => {
@@ -35,7 +38,8 @@ export default function App() {
     'Core CS': resources.filter((r) => r.category === 'Core CS').length,
     'AI/ML': resources.filter((r) => r.category === 'AI/ML').length,
     'Web Dev': resources.filter((r) => r.category === 'Web Dev').length,
-    'Academics': resources.filter((r) => r.category === 'Academics').length
+    'Academics': resources.filter((r) => r.category === 'Academics').length,
+    'Learning Roadmap': resources.filter((r) => r.category === 'Learning Roadmap').length
   };
 
   // Filter resources
@@ -105,14 +109,13 @@ export default function App() {
     <div className="app-wrapper">
       {/* Universal Header Navbar */}
       <Navbar
-        currentPage={currentPage}
         onNavigate={(page) => {
           setCurrentPage(page);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        onOpenAddModal={() => setIsAddModalOpen(true)}
+        onOpenAuth={setAuthMode}
+        authUser={authUser}
+        onLogout={() => setAuthUser(null)}
       />
 
       {currentPage === 'home' ? (
@@ -127,11 +130,18 @@ export default function App() {
 
           <Features />
 
-          <CategoriesSection onSelectCategory={handleCategorySelect} />
+          <CategoriesSection onSelectCategory={handleCategorySelect} categoryCounts={categoryCounts} />
 
-          <StatsSection />
+          <StatsSection resources={resources} />
 
-          <CtaSection onOpenAddModal={() => setIsAddModalOpen(true)} />
+          <CtaSection
+            onExplore={() => {
+              setSelectedCategory('All Resources');
+              setCurrentPage('dashboard');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenAddModal={() => setIsAddModalOpen(true)}
+          />
 
           <Footer
             onSelectCategory={handleCategorySelect}
@@ -150,6 +160,7 @@ export default function App() {
             selectedTag={selectedTag}
             onSelectTag={setSelectedTag}
             searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
             onClearSearch={() => setSearchQuery('')}
             categoryCounts={categoryCounts}
             onStatusToggle={handleStatusToggle}
@@ -175,6 +186,18 @@ export default function App() {
         onClose={() => setIsAddModalOpen(false)}
         onAddResource={handleAddResource}
       />
+
+      {authMode && (
+        <AuthModal
+          mode={authMode}
+          onClose={() => setAuthMode(null)}
+          onModeChange={setAuthMode}
+          onAuthenticated={(user) => {
+            setAuthUser(user);
+            setAuthMode(null);
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -1,22 +1,29 @@
 import React from 'react';
 import './StatsSection.css';
 
-export default function StatsSection() {
+export default function StatsSection({ resources }) {
+  const categoryCount = new Set(
+    resources.map((resource) => resource.category).filter(Boolean)
+  ).size;
+  const roadmapCount = resources.filter(
+    (resource) => resource.category === 'Learning Roadmap'
+  ).length;
+
   return (
     <section className="stats-section" id="stats">
       <div className="section-container">
         <div className="stats-grid">
           <div className="stat-item" id="stat-1">
             <div className="stat-value-row">
-              <span className="stat-number">10</span>
+              <span className="stat-number">{resources.length}</span>
             </div>
-            <span className="stat-label">Curated Resources</span>
+            <span className="stat-label">Resources to explore</span>
           </div>
           <div className="stat-divider"></div>
 
           <div className="stat-item" id="stat-2">
             <div className="stat-value-row">
-              <span className="stat-number">4</span>
+              <span className="stat-number">{categoryCount}</span>
             </div>
             <span className="stat-label">Categories</span>
           </div>
@@ -24,9 +31,9 @@ export default function StatsSection() {
 
           <div className="stat-item" id="stat-3">
             <div className="stat-value-row">
-              <span className="stat-number">7</span>
+              <span className="stat-number">{roadmapCount}</span>
             </div>
-            <span className="stat-label">Semesters Covered</span>
+            <span className="stat-label">Roadmap modules</span>
           </div>
           <div className="stat-divider"></div>
 

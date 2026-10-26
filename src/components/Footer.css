@@ -12,7 +12,7 @@
 }
 
 .footer-brand {
-  max-width: 360px;
+  max-width: 390px;
 }
 
 .footer-brand .logo {
@@ -21,7 +21,7 @@
 
 .footer-desc {
   font-size: 0.9rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   line-height: 1.7;
 }
 
@@ -40,7 +40,7 @@
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: 0.04em;
+  letter-spacing: 0;
   margin-bottom: 4px;
 }
 

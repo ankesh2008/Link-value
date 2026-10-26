@@ -1,13 +1,14 @@
 import React from 'react';
 import './Sidebar.css';
-import { RotateCcw, Code, Brain, Globe, GraduationCap, Layers } from 'lucide-react';
+import { RotateCcw, Code, Brain, Globe, GraduationCap, Layers, BookOpen } from 'lucide-react';
 
 const CATEGORIES = [
   { name: 'All Resources', icon: <Layers size={15} /> },
-  { name: 'Core CS', icon: <Code size={15} color="#10b981" /> },
-  { name: 'AI/ML', icon: <Brain size={15} color="#a855f7" /> },
-  { name: 'Web Dev', icon: <Globe size={15} color="#00e5ff" /> },
-  { name: 'Academics', icon: <GraduationCap size={15} color="#f59e0b" /> }
+  { name: 'Core CS', icon: <Code size={15} /> },
+  { name: 'AI/ML', icon: <Brain size={15} /> },
+  { name: 'Web Dev', icon: <Globe size={15} /> },
+  { name: 'Academics', icon: <GraduationCap size={15} /> },
+  { name: 'Learning Roadmap', icon: <BookOpen size={15} /> }
 ];
 
 export default function Sidebar({

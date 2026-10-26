@@ -14,7 +14,7 @@
   padding: 6px 16px;
   background: var(--accent-glow);
   border-radius: 50px;
-  border: 1px solid rgba(0, 229, 255, 0.15);
+  border: 1px solid var(--border-color);
 }
 
 .section-title {
@@ -33,8 +33,8 @@
 }
 
 .features {
-  padding: 100px 0 80px;
-  background: var(--bg-primary);
+  padding: 96px 0 100px;
+  background: var(--bg-secondary);
   position: relative;
 }
 
@@ -48,8 +48,8 @@
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 36px 28px;
-  text-align: center;
+  padding: 30px 24px;
+  text-align: left;
   transition: all var(--transition-base);
   position: relative;
   overflow: hidden;
@@ -62,15 +62,15 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  background: var(--accent);
   opacity: 0;
   transition: opacity var(--transition-base);
 }
 
 .feature-card:hover {
   border-color: var(--border-hover);
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-glow);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
 }
 
 .feature-card:hover::before {
@@ -81,9 +81,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius-md);
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
   background: var(--accent-glow);
   color: var(--accent);
   margin-bottom: 20px;
@@ -91,8 +91,8 @@
 }
 
 .feature-card:hover .feature-icon {
-  transform: scale(1.08);
-  box-shadow: 0 0 24px rgba(0, 229, 255, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px var(--accent-glow);
 }
 
 .feature-card h3 {

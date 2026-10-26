@@ -2,7 +2,7 @@ import React from 'react';
 import './Dashboard.css';
 import Sidebar from './Sidebar';
 import ResourceCard from './ResourceCard';
-import { Filter, X, ArrowLeft, Plus } from 'lucide-react';
+import { Filter, X, ArrowLeft, Search } from 'lucide-react';
 
 export default function Dashboard({
   resources,
@@ -13,6 +13,7 @@ export default function Dashboard({
   selectedTag,
   onSelectTag,
   searchQuery,
+  onSearchChange,
   onClearSearch,
   categoryCounts,
   onStatusToggle,
@@ -52,9 +53,18 @@ export default function Dashboard({
             </div>
 
             <div className="header-actions">
+              <label className="dashboard-search-bar">
+                <Search size={18} className="dashboard-search-icon" />
+                <input
+                  type="search"
+                  placeholder="Search resources..."
+                  value={searchQuery}
+                  onChange={(event) => onSearchChange(event.target.value)}
+                  aria-label="Search resources"
+                />
+              </label>
               <button className="add-resource-dash-btn" onClick={onOpenAddModal}>
-                <Plus size={16} />
-                <span>+ Add Resource</span>
+                <span>Add Resource</span>
               </button>
             </div>
           </div>
