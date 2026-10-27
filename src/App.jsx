@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -10,98 +12,44 @@ import CtaSection from './components/CtaSection';
 import Footer from './components/Footer';
 import AddResourceModal from './components/AddResourceModal';
 import AuthModal from './components/AuthModal';
+import { getDefaultResources } from './utils/storage';
 import {
-  getStoredResources,
-  saveResources,
-  resetResourcesToDefault
-} from './utils/storage';
+  addResource,
+  deleteResource,
+  resetExplorer,
+  selectCategoryCounts,
+  selectFilteredResources,
+  setSearchQuery,
+  setSelectedCategory,
+  setSelectedSemester,
+  setSelectedTag,
+  toggleResourceStatus
+} from './store/appSlice';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('home'); // 'home' | 'dashboard'
-  const [resources, setResources] = useState(() => getStoredResources());
-  const [selectedCategory, setSelectedCategory] = useState('All Resources');
-  const [selectedSemester, setSelectedSemester] = useState('All Semesters');
-  const [selectedTag, setSelectedTag] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {
+    resources,
+    selectedCategory,
+    selectedSemester,
+    selectedTag,
+    searchQuery
+  } = useSelector((state) => state.app);
+  const filteredResources = useSelector(selectFilteredResources);
+  const categoryCounts = useSelector(selectCategoryCounts);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState(null);
   const [authUser, setAuthUser] = useState(null);
 
-  // Sync to localStorage
-  useEffect(() => {
-    saveResources(resources);
-  }, [resources]);
-
-  // Compute category count badges
-  const categoryCounts = {
-    'All Resources': resources.length,
-    'Core CS': resources.filter((r) => r.category === 'Core CS').length,
-    'AI/ML': resources.filter((r) => r.category === 'AI/ML').length,
-    'Web Dev': resources.filter((r) => r.category === 'Web Dev').length,
-    'Academics': resources.filter((r) => r.category === 'Academics').length,
-    'Learning Roadmap': resources.filter((r) => r.category === 'Learning Roadmap').length
-  };
-
-  // Filter resources
-  const filteredResources = resources.filter((item) => {
-    const matchCategory =
-      selectedCategory === 'All Resources' || item.category === selectedCategory;
-
-    const matchSemester =
-      selectedSemester === 'All Semesters' || item.semester === selectedSemester;
-
-    const matchTag =
-      !selectedTag || (item.tags && item.tags.includes(selectedTag));
-
-    const matchSearch =
-      !searchQuery.trim() ||
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (item.semester && item.semester.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (item.tags && item.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase())));
-
-    return matchCategory && matchSemester && matchTag && matchSearch;
-  });
-
-  // Handlers
-  const handleStatusToggle = (id) => {
-    setResources(
-      resources.map((item) => {
-        if (item.id === id) {
-          const nextStatus =
-            item.status === 'To Read'
-              ? 'In Progress'
-              : item.status === 'In Progress'
-              ? 'Mastered'
-              : 'To Read';
-          return { ...item, status: nextStatus };
-        }
-        return item;
-      })
-    );
-  };
-
-  const handleAddResource = (newRes) => {
-    setResources([newRes, ...resources]);
-  };
-
-  const handleDeleteResource = (id) => {
-    setResources(resources.filter((item) => item.id !== id));
-  };
-
-  const handleResetData = () => {
-    const reset = resetResourcesToDefault();
-    setResources(reset);
-    setSelectedCategory('All Resources');
-    setSelectedSemester('All Semesters');
-    setSelectedTag(null);
-    setSearchQuery('');
-  };
+  const handleStatusToggle = (id) => dispatch(toggleResourceStatus(id));
+  const handleAddResource = (resource) => dispatch(addResource(resource));
+  const handleDeleteResource = (id) => dispatch(deleteResource(id));
+  const handleResetData = () => dispatch(resetExplorer(getDefaultResources()));
 
   const handleCategorySelect = (categoryName) => {
-    setSelectedCategory(categoryName);
-    setCurrentPage('dashboard');
+    dispatch(setSelectedCategory(categoryName));
+    navigate('/dashboard');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -110,7 +58,7 @@ export default function App() {
       {/* Universal Header Navbar */}
       <Navbar
         onNavigate={(page) => {
-          setCurrentPage(page);
+          navigate(page === 'home' ? '/' : '/dashboard');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
         onOpenAuth={setAuthMode}
@@ -118,67 +66,80 @@ export default function App() {
         onLogout={() => setAuthUser(null)}
       />
 
-      {currentPage === 'home' ? (
-        <>
-          {/* WELCOME LANDING PAGE */}
-          <Hero
-            onExplore={() => {
-              setCurrentPage('dashboard');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-          />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              {/* WELCOME LANDING PAGE */}
+              <Hero
+                onExplore={() => {
+                  navigate('/dashboard');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
 
-          <Features />
+              <Features />
 
-          <CategoriesSection onSelectCategory={handleCategorySelect} categoryCounts={categoryCounts} />
+              <CategoriesSection
+                onSelectCategory={handleCategorySelect}
+                categoryCounts={categoryCounts}
+              />
 
-          <StatsSection resources={resources} />
+              <StatsSection resources={resources} />
 
-          <CtaSection
-            onExplore={() => {
-              setSelectedCategory('All Resources');
-              setCurrentPage('dashboard');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            onOpenAddModal={() => setIsAddModalOpen(true)}
-          />
+              <CtaSection
+                onExplore={() => {
+                  dispatch(setSelectedCategory('All Resources'));
+                  navigate('/dashboard');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                onOpenAddModal={() => setIsAddModalOpen(true)}
+              />
 
-          <Footer
-            onSelectCategory={handleCategorySelect}
-            onOpenAddModal={() => setIsAddModalOpen(true)}
-          />
-        </>
-      ) : (
-        <>
-          {/* SEPARATE CS RESOURCE HUB DASHBOARD PAGE */}
-          <Dashboard
-            resources={filteredResources}
-            selectedCategory={selectedCategory}
-            onSelectCategory={setSelectedCategory}
-            selectedSemester={selectedSemester}
-            onSelectSemester={setSelectedSemester}
-            selectedTag={selectedTag}
-            onSelectTag={setSelectedTag}
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            onClearSearch={() => setSearchQuery('')}
-            categoryCounts={categoryCounts}
-            onStatusToggle={handleStatusToggle}
-            onDeleteResource={handleDeleteResource}
-            onResetData={handleResetData}
-            onNavigateHome={() => {
-              setCurrentPage('home');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            onOpenAddModal={() => setIsAddModalOpen(true)}
-          />
+              <Footer
+                onSelectCategory={handleCategorySelect}
+                onOpenAddModal={() => setIsAddModalOpen(true)}
+              />
+            </>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <>
+              {/* SEPARATE CS RESOURCE HUB DASHBOARD PAGE */}
+              <Dashboard
+                resources={filteredResources}
+                selectedCategory={selectedCategory}
+                onSelectCategory={(category) => dispatch(setSelectedCategory(category))}
+                selectedSemester={selectedSemester}
+                onSelectSemester={(semester) => dispatch(setSelectedSemester(semester))}
+                selectedTag={selectedTag}
+                onSelectTag={(tag) => dispatch(setSelectedTag(tag))}
+                searchQuery={searchQuery}
+                onSearchChange={(query) => dispatch(setSearchQuery(query))}
+                onClearSearch={() => dispatch(setSearchQuery(''))}
+                categoryCounts={categoryCounts}
+                onStatusToggle={handleStatusToggle}
+                onDeleteResource={handleDeleteResource}
+                onResetData={handleResetData}
+                onNavigateHome={() => {
+                  navigate('/');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                onOpenAddModal={() => setIsAddModalOpen(true)}
+              />
 
-          <Footer
-            onSelectCategory={handleCategorySelect}
-            onOpenAddModal={() => setIsAddModalOpen(true)}
-          />
-        </>
-      )}
+              <Footer
+                onSelectCategory={handleCategorySelect}
+                onOpenAddModal={() => setIsAddModalOpen(true)}
+              />
+            </>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
 
       {/* Add Resource Modal */}
       <AddResourceModal

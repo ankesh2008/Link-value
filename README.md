@@ -1,4 +1,4 @@
-# Link Value — CS Study Resource Hub
+\\# Link Value — CS Study Resource Hub
 
 Link Value is a React single-page app for discovering computer science learning
 resources, following a 72-week frontend learning roadmap, and tracking study
